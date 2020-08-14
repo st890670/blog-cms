@@ -1,0 +1,78 @@
+.article {
+  &-upload {
+    width: 100%;
+    height: 250px;
+    background-color: #f3f8fe;
+    border: 3px dashed #479ffa;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #479ffa;
+    cursor: pointer;
+
+    &-alert {
+      background-color: #fef3f3;
+      border-color: #fa4747;
+    }
+
+    &-icon {
+      width: 200px;
+      height: 150px;
+      object-fit: contain;
+    }
+
+    &-btn {
+      width: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &-preview {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+  }
+
+  &-content {
+    @extend .form-control;
+    resize: none;
+    height: 80vh !important;
+    overflow-y: auto;
+    border: 1px solid lightgray;
+  }
+  &-remove {
+    position: absolute;
+    color: red;
+    top: -10px;
+    right: -10px;
+    background-color: $color-background;
+    padding: 10px;
+    box-shadow: 1px 1px 3px 0 $secondary;
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:active {
+      box-shadow: 1px 1px 1px 0 $secondary;
+    }
+  }
+
+  &-reference {
+    width: 100%;
+    height: $input-height;
+    background-color: $color-gray;
+    border-radius: $borderRadius;
+    display: flex;
+    align-items: center;
+    padding: $inputPaddingY $inputPaddingX;
+  }
+}

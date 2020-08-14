@@ -1,0 +1,23 @@
+.search {
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: $color-gray;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+
+  &-not-expand{
+    border: none;
+  }
+
+  &-input {
+    outline: none;
+    border: none;
+  }
+
+  &-icon {
+    color: $color-gray-dark;
+    cursor: pointer;
+  }
+}

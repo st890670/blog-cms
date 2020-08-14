@@ -1,0 +1,33 @@
+.login {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d5dbe9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-box {
+    width: 450px;
+    height: 500px;
+    background-color: white;
+    box-shadow: 3px 3px 6px 0 gray;
+    border-radius: 10px;
+    padding:2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    &-img {
+      width: 100px;
+      height: 100px;
+      border: 1px solid lightgray;
+      border-radius: 50%;
+      font-size: 3.5rem;
+      color: $secondary;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,87 @@
+import java.nio.file.Paths
+
+plugins {
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'jason.idv'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.15'
+	compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.4'
+	runtimeOnly 'org.postgresql:postgresql'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testCompile group: 'junit', name: 'junit', version: '4.13'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+void runByProfile(runTask, profile) {
+	gradle.taskGraph.whenReady {graph ->
+		if (graph.hasTask(runTask)) {
+			bootRun.args = ["--spring.profiles.active=" + profile]
+		}
+	}
+}
+
+task jasonRun(dependsOn: bootRun, group: 'run') {
+	runByProfile(it, "dev")
+}
+
+void buildByProfile( buildTask,  profile) {
+	gradle.taskGraph.whenReady {graph ->
+		if (graph.hasTask(buildTask)) {
+			updateFront()
+
+			Arrays.stream(Paths.get("src/main/resources").toFile().listFiles())
+				  .filter({file ->
+					  file.name.contains(".properties") && !file.name.contains(profile) &&
+							  !file.name.contains("application.properties")
+				  })
+				  .forEach({file -> buildTask.rootSpec.exclude("**/${file.name}")})
+
+			test.enabled = false
+			ant.propertyfile(file: "src/main/resources/application.properties") {
+				entry(key: "spring.profiles.active", value: profile)
+			}
+		}
+	}
+}
+
+void updateFront() {
+	delete("src/main/resources/static/")
+
+	copy {
+		from "src/front-end/build"
+		into "src/main/resources/static"
+	}
+}
+
+task jasonWar(type: War, group: 'war') {
+	archiveName "ROOT.war"
+	buildByProfile(it, "prod")
+}

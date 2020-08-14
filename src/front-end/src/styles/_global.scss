@@ -1,0 +1,159 @@
+html,
+body {
+  margin: 0;
+  font-family: Noto Sans TC, 微軟正黑體;
+  height: 100% !important;
+  background-color: $color-background !important;
+  overflow-x: hidden;
+}
+
+#root {
+  height: 100% !important;
+  min-height: 100% !important;
+  font-family: Noto Sans TC, 微軟正黑體;
+  overflow-y: hidden;
+}
+
+.inherit-height {
+  height: inherit;
+}
+
+// 去除<a>原生hover效果
+.jas-a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+$colors: (
+  "primary": (
+    "color": $color-blue,
+    "darkColor": $color-blue-dark,
+  ),
+  "success": (
+    "color": $color-green,
+    "darkColor": $color-green-dark,
+  ),
+  "secondary": (
+    "color": $color-gray,
+    "darkColor": $color-gray-dark,
+  ),
+  "danger": (
+    "color": $color-red,
+    "darkColor": $color-red-dark,
+  ),
+  "warning": (
+    "color": $color-warning,
+    "darkColor": $color-warning-dark,
+  ),
+  "info":(
+    "color": $color-info,
+    "darkColor": $color-info-dark,
+  )
+);
+
+@each $colorName, $colorValue in $colors {
+  $color: map-get($colorValue, "color");
+  $darkColor: map-get($colorValue, "darkColor");
+
+  .jas-btn-#{$colorName} {
+    border: none;
+    height: $inputHeight;
+    padding: 0 0.5rem;
+    border-radius: $borderRadius;
+    background-color: $color;
+    color: white;
+    font-size: 0.85rem;
+    box-shadow: 3px 3px 3px 0 lightgray;
+    transition: all 0.1s;
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background-color: $darkColor;
+    }
+
+    &:active {
+      box-shadow: none;
+    }
+  }
+
+  .jas-input-#{$colorName} {
+    outline: none;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: $borderRadius;
+    padding: 0.3rem 0.5rem;
+    border-color: $color;
+    transition: all 0.2s;
+    &:focus {
+      border-color: $darkColor;
+    }
+  }
+
+  .jas-badge-#{$colorName} {
+    background-color: $color;
+    padding: 0.2rem 0.5rem;
+    border-radius: $borderRadius;
+    color: #fff;
+  }
+}
+
+.jas-input-invalid {
+  outline: none;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: $borderRadius;
+  padding: 0.3rem 0.5rem;
+  border-color: $color-red;
+  &:focus {
+    border-color: $color-red;
+  }
+}
+
+.jas-alert-msg {
+  width: 100%;
+  margin-left: 1rem;
+  margin-bottom: 0.3rem;
+  font-size: 0.75rem;
+  color: $color-red;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cur-p{
+  cursor: pointer;
+}
+
+.page {
+  padding: 1rem;
+  width: 100%;
+  min-height: 100vh;
+
+  &-description{
+    width: 100%;
+    text-align: end;
+    font-size: 0.8rem;
+    color: $color-gray-dark;
+  }
+
+  &-search {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid $color-gray;
+    box-shadow: 3px 3px 3px 0 $color-gray;
+  }
+
+  &-result{
+    width: 100%;
+    color: $color-gray-dark;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+}
